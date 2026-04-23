@@ -84,7 +84,12 @@
     <main class="card">
       <h1>Task Tracker</h1>
       <div class="controls">
-        <input id="taskInput" type="text" placeholder="Add a task..." />
+        <input
+          id="taskInput"
+          type="text"
+          placeholder="Add a task..."
+          aria-label="Task name"
+        />
         <button id="addTaskBtn" type="button">Add</button>
       </div>
       <ul id="taskList" aria-live="polite" aria-label="Task list"></ul>
@@ -96,11 +101,12 @@
       const addTaskBtn = document.getElementById("addTaskBtn");
       const taskList = document.getElementById("taskList");
 
-      const createButton = (label, className, onClick) => {
+      const createButton = (label, className, onClick, ariaLabel) => {
         const button = document.createElement("button");
         button.type = "button";
         button.textContent = label;
         button.className = className;
+        if (ariaLabel) button.setAttribute("aria-label", ariaLabel);
         button.addEventListener("click", onClick);
         return button;
       };
@@ -113,12 +119,22 @@
         const text = document.createElement("span");
         text.textContent = value;
 
-        const toggle = createButton("Done", "small", () => {
-          item.classList.toggle("completed");
-        });
-        const remove = createButton("Delete", "danger", () => {
-          item.remove();
-        });
+        const toggle = createButton(
+          "Done",
+          "small",
+          () => {
+            item.classList.toggle("completed");
+          },
+          `Mark task as done: ${value}`
+        );
+        const remove = createButton(
+          "Delete",
+          "danger",
+          () => {
+            item.remove();
+          },
+          `Delete task: ${value}`
+        );
 
         item.append(text, toggle, remove);
         taskList.appendChild(item);
