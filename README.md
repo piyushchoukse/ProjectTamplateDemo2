@@ -1,4 +1,4 @@
-# ProjectTamplateDemo2
+# ProjectTemplateDemo2
 
 This repository now includes a small sample app created by the agent.
 
